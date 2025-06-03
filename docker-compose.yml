@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/taylorsongs
+      SPRING_DATASOURCE_USERNAME: taylorswift
+      SPRING_DATASOURCE_PASSWORD: 1989password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    networks:
+      - taylornet
+
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: taylorsongs
+      MYSQL_USER: taylorswift
+      MYSQL_PASSWORD: 1989password
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    networks:
+      - taylornet
+
+networks:
+  taylornet:
